@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Inscription - UniAssist IA</title>
+    <link rel="stylesheet" href="inscription.css">
+</head>
+<body>
+
+<header>
+    <h1>🎓 UniAssist IA</h1>
+    <p>Formulaire d'Inscription Universitaire</p>
+</header>
+
+<section class="form-container">
+    <h2>📝 Nouvelle Inscription</h2>
+
+    <form action="#" method="POST" enctype="multipart/form-data">
+        
+        <div class="form-group">
+            <label>Nom complet</label>
+            <input type="text" placeholder="Ex: Ahmed Ben Ali" required>
+        </div>
+
+        <div class="form-group">
+            <label>Email universitaire</label>
+            <input type="email" placeholder="exemple@universite.edu" required>
+        </div>
+
+        <div class="form-group">
+            <label>Numéro CIN / Passeport</label>
+            <input type="text" required>
+        </div>
+
+        <div class="form-group">
+            <label>Filière</label>
+            <select required>
+                <option value="">-- Sélectionner --</option>
+                <option>Informatique</option>
+                <option>Gestion</option>
+                <option>Économie</option>
+                <option>Droit</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Niveau</label>
+            <select required>
+                <option value="">-- Sélectionner --</option>
+                <option>Licence 1</option>
+                <option>Licence 2</option>
+                <option>Licence 3</option>
+                <option>Master 1</option>
+                <option>Master 2</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Relevé de notes (PDF)</label>
+            <input type="file" accept=".pdf" required>
+        </div>
+
+        <div class="form-group">
+            <label>Copie CIN (PDF ou image)</label>
+            <input type="file" accept=".pdf,.jpg,.png" required>
+        </div>
+
+        <div class="form-group">
+            <label>Photo d'identité</label>
+            <input type="file" accept=".jpg,.png" required>
+        </div>
+
+        <button type="submit">📤 Soumettre l'inscription</button>
+
+    </form>
+</section>
+
+<footer>
+    <p>© 2026 UniAssist IA - Projet PFE</p>
+</footer>
+<!-- Bouton flottant IA sur page Inscription -->
+<button id="inscAIbtn">💡 Assistant Inscription</button>
+
+<div id="inscAIchat" style="display:none; border:1px solid #004080; padding:10px; width:350px; position:fixed; bottom:20px; right:20px; background:white;">
+  <textarea id="inscQuestion" placeholder="Posez votre question sur l'inscription..." rows="3" style="width:100%;"></textarea>
+  <button onclick="askInscAI()">Envoyer</button>
+  <div id="inscResponse" style="margin-top:10px;"></div>
+</div>
+
+<script>
+document.getElementById("inscAIbtn").onclick = () => {
+    document.getElementById("inscAIchat").style.display = "block";
+}
+
+async function askInscAI() {
+    const question = document.getElementById("inscQuestion").value;
+    const res = await fetch("/api/ai-inscription", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question })
+    });
+    const data = await res.json();
+    document.getElementById("inscResponse").innerHTML = data.answer;
+}
+</script>
+</body>
+</html>

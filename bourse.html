@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Bourses - UniAssist IA</title>
+    <link rel="stylesheet" href="bourse.css">
+</head>
+<body>
+
+<header>
+    <h1>🎓 UniAssist IA</h1>
+    <p>Demande de Bourse Universitaire</p>
+</header>
+
+<section class="bourse-container">
+    <h2>💰 Nouvelle Demande de Bourse</h2>
+
+    <form>
+
+        <div class="form-group">
+            <label>Type de bourse</label>
+            <select required>
+                <option value="">-- Sélectionner --</option>
+                <option>Bourse sociale</option>
+                <option>Bourse d'excellence</option>
+                <option>Bourse de mobilité</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Revenu familial annuel (€)</label>
+            <input type="number" placeholder="Ex: 12000" required>
+        </div>
+
+        <div class="form-group">
+            <label>Nombre de membres dans la famille</label>
+            <input type="number" required>
+        </div>
+
+        <div class="form-group">
+            <label>Relevé bancaire (PDF)</label>
+            <input type="file" accept=".pdf" required>
+        </div>
+
+        <div class="form-group">
+            <label>Attestation de revenu (PDF)</label>
+            <input type="file" accept=".pdf" required>
+        </div>
+
+        <button type="submit">📤 Soumettre la demande</button>
+        <button type="button" class="secondary-btn">🔎 Vérifier éligibilité</button>
+
+    </form>
+</section>
+
+<section class="statut-section">
+    <h2>📊 Suivi de ma demande</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Date</th>
+                <th>Statut</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Bourse sociale</td>
+                <td>10/02/2026</td>
+                <td class="attente">En attente</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<footer>
+    <p>© 2026 UniAssist IA - Projet PFE</p>
+</footer>
+<!-- Bouton flottant IA sur page Bourses -->
+<button id="bourseAIbtn">💡 Assistant Bourse</button>
+
+<div id="bourseAIchat" style="display:none; border:1px solid #004080; padding:10px; width:350px; position:fixed; bottom:20px; right:20px; background:white;">
+  <textarea id="bourseQuestion" placeholder="Posez votre question sur les bourses..." rows="3" style="width:100%;"></textarea>
+  <button onclick="askBourseAI()">Envoyer</button>
+  <div id="bourseResponse" style="margin-top:10px;"></div>
+</div>
+
+<script>
+document.getElementById("bourseAIbtn").onclick = () => {
+    document.getElementById("bourseAIchat").style.display = "block";
+}
+
+async function askBourseAI() {
+    const question = document.getElementById("bourseQuestion").value;
+    const res = await fetch("/api/ai-bourse", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question })
+    });
+    const data = await res.json();
+    document.getElementById("bourseResponse").innerHTML = data.answer;
+}
+</script>
+</body>
+</html>

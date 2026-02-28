@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Rattrapage - UniAssist IA</title>
+    <link rel="stylesheet" href="rattrapage.css">
+</head>
+<body>
+
+<header>
+    <h1>🎓 UniAssist IA</h1>
+    <p>Gestion des Examens de Rattrapage</p>
+</header>
+
+<section class="rattrapage-container">
+    <h2>🔁 Déclarer un Rattrapage</h2>
+
+    <form>
+
+        <div class="form-group">
+            <label>Matière / Module</label>
+            <select required>
+                <option value="">-- Sélectionner --</option>
+                <option>Mathématiques</option>
+                <option>Informatique</option>
+                <option>Économie</option>
+                <option>Droit</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Type d'examen</label>
+            <select required>
+                <option value="">-- Sélectionner --</option>
+                <option>Écrit</option>
+                <option>Oral</option>
+                <option>Pratique / TP</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Date souhaitée</label>
+            <input type="date" required>
+        </div>
+
+        <div class="form-group">
+            <label>Motif du rattrapage</label>
+            <textarea placeholder="Ex: Absence justifiée le jour de l'examen"></textarea>
+        </div>
+
+        <button type="submit">📤 Soumettre la demande</button>
+
+    </form>
+</section>
+
+<section class="historique">
+    <h2>📊 Historique des rattrapages</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Matière</th>
+                <th>Type</th>
+                <th>Date</th>
+                <th>Statut</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Mathématiques</td>
+                <td>Écrit</td>
+                <td>15/02/2026</td>
+                <td class="valide">Validé</td>
+            </tr>
+            <tr>
+                <td>Informatique</td>
+                <td>TP</td>
+                <td>20/02/2026</td>
+                <td class="attente">En attente</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<footer>
+    <p>© 2026 UniAssist IA - Projet PFE</p>
+</footer>
+<!-- Bouton flottant IA sur page Rattrapage -->
+<button id="rattrapageAIbtn">💡 Assistant Rattrapage</button>
+
+<div id="rattrapageAIchat" style="display:none; border:1px solid #004080; padding:10px; width:350px; position:fixed; bottom:20px; right:20px; background:white;">
+  <textarea id="rattrapageQuestion" placeholder="Posez votre question sur le rattrapage..." rows="3" style="width:100%;"></textarea>
+  <button onclick="askRattrapageAI()">Envoyer</button>
+  <div id="rattrapageResponse" style="margin-top:10px;"></div>
+</div>
+
+<script>
+document.getElementById("rattrapageAIbtn").onclick = () => {
+    document.getElementById("rattrapageAIchat").style.display = "block";
+}
+
+async function askRattrapageAI() {
+    const question = document.getElementById("rattrapageQuestion").value;
+    const res = await fetch("/api/ai-rattrapage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question })
+    });
+    const data = await res.json();
+    document.getElementById("rattrapageResponse").innerHTML = data.answer;
+}
+</script>
+</body>
+</html>

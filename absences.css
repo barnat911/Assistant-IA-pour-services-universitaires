@@ -1,0 +1,97 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+}
+
+header {
+    background-color: #002b5c;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.absence-container {
+    width: 50%;
+    margin: 40px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+}
+
+.historique {
+    width: 70%;
+    margin: 30px auto;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+textarea {
+    height: 80px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #004080;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.valide {
+    color: green;
+    font-weight: bold;
+}
+
+.attente {
+    color: orange;
+    font-weight: bold;
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #002b5c;
+    color: white;
+    margin-top: 30px;
+}

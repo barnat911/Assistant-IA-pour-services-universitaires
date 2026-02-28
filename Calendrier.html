@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Calendrier - UniAssist IA</title>
+    <link rel="stylesheet" href="calendrier.css">
+</head>
+<body>
+
+<header>
+    <h1>🎓 UniAssist IA</h1>
+    <p>Calendrier Académique 2026</p>
+</header>
+
+<section class="calendrier-container">
+    <h2>📅 Événements à venir</h2>
+
+    <div class="filter">
+        <label>Filtrer par type :</label>
+        <select id="eventFilter">
+            <option value="all">Tous</option>
+            <option value="inscription">Inscription</option>
+            <option value="examen">Examen</option>
+            <option value="rattrapage">Rattrapage</option>
+            <option value="stage">Stage</option>
+        </select>
+    </div>
+
+    <table id="calendarTable">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Événement</th>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-type="inscription">
+                <td>01/09/2026</td>
+                <td>Début des inscriptions</td>
+                <td>Inscription</td>
+                <td>Ouverture des inscriptions pour le semestre 1</td>
+            </tr>
+            <tr data-type="examen">
+                <td>15/12/2026</td>
+                <td>Examen final Mathématiques</td>
+                <td>Examen</td>
+                <td>Salle A101, 9h-12h</td>
+            </tr>
+            <tr data-type="rattrapage">
+                <td>20/12/2026</td>
+                <td>Rattrapage Informatique</td>
+                <td>Rattrapage</td>
+                <td>Module absentéisme</td>
+            </tr>
+            <tr data-type="stage">
+                <td>01/02/2026</td>
+                <td>Début stage ABC Consulting</td>
+                <td>Stage</td>
+                <td>Stage académique semestre 2</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<footer>
+    <p>© 2026 UniAssist IA - Projet PFE</p>
+</footer>
+
+<script>
+    // Filtrage simple par type d'événement
+    const filterSelect = document.getElementById('eventFilter');
+    const tableRows = document.querySelectorAll('#calendarTable tbody tr');
+
+    filterSelect.addEventListener('change', () => {
+        const value = filterSelect.value;
+        tableRows.forEach(row => {
+            if (value === 'all' || row.dataset.type === value) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+<!-- Bouton flottant IA sur page Calendrier -->
+<button id="calendrierAIbtn">💡 Assistant Calendrier</button>
+
+<div id="calendrierAIchat" style="display:none; border:1px solid #004080; padding:10px; width:350px; position:fixed; bottom:20px; right:20px; background:white;">
+  <textarea id="calendrierQuestion" placeholder="Posez votre question sur le calendrier..." rows="3" style="width:100%;"></textarea>
+  <button onclick="askCalendrierAI()">Envoyer</button>
+  <div id="calendrierResponse" style="margin-top:10px;"></div>
+</div>
+
+<script>
+document.getElementById("calendrierAIbtn").onclick = () => {
+    document.getElementById("calendrierAIchat").style.display = "block";
+}
+
+async function askCalendrierAI() {
+    const question = document.getElementById("calendrierQuestion").value;
+    const res = await fetch("/api/ai-calendrier", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question })
+    });
+    const data = await res.json();
+    document.getElementById("calendrierResponse").innerHTML = data.answer;
+}
+</script>
+</body>
+</html>

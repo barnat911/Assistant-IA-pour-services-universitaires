@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Stages - UniAssist IA</title>
+    <link rel="stylesheet" href="stages.css">
+</head>
+<body>
+
+<header>
+    <h1>🎓 UniAssist IA</h1>
+    <p>Gestion des Stages Universitaires</p>
+</header>
+
+<section class="stage-container">
+    <h2>📑 Déclarer un Stage</h2>
+
+    <form>
+
+        <div class="form-group">
+            <label>Entreprise / Organisation</label>
+            <input type="text" placeholder="Ex: ABC Consulting" required>
+        </div>
+
+        <div class="form-group">
+            <label>Adresse de l'entreprise</label>
+            <input type="text" placeholder="Ex: 123 Rue du Campus, Ville" required>
+        </div>
+
+        <div class="form-group">
+            <label>Date de début</label>
+            <input type="date" required>
+        </div>
+
+        <div class="form-group">
+            <label>Date de fin</label>
+            <input type="date" required>
+        </div>
+
+        <div class="form-group">
+            <label>Type de stage</label>
+            <select required>
+                <option value="">-- Sélectionner --</option>
+                <option>Stage académique</option>
+                <option>Stage professionnel</option>
+                <option>Stage de fin d’études</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Convention de stage (PDF)</label>
+            <input type="file" accept=".pdf" required>
+        </div>
+
+        <div class="form-group">
+            <label>Autres documents (facultatif)</label>
+            <input type="file" accept=".pdf,.jpg,.png" multiple>
+        </div>
+
+        <button type="submit">📤 Soumettre la demande</button>
+        <button type="button" class="secondary-btn">📥 Télécharger modèle de convention</button>
+
+    </form>
+</section>
+
+<section class="historique">
+    <h2>📊 Historique des stages</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Entreprise</th>
+                <th>Dates</th>
+                <th>Type</th>
+                <th>Statut</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>ABC Consulting</td>
+                <td>01/02/2026 - 30/04/2026</td>
+                <td>Stage académique</td>
+                <td class="attente">En attente</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<footer>
+    <p>© 2026 UniAssist IA - Projet PFE</p>
+</footer>
+<!-- Bouton flottant IA sur page Stages -->
+<button id="stageAIbtn">💡 Assistant Stage</button>
+
+<div id="stageAIchat" style="display:none; border:1px solid #004080; padding:10px; width:350px; position:fixed; bottom:20px; right:20px; background:white;">
+  <textarea id="stageQuestion" placeholder="Posez votre question sur les stages..." rows="3" style="width:100%;"></textarea>
+  <button onclick="askStageAI()">Envoyer</button>
+  <div id="stageResponse" style="margin-top:10px;"></div>
+</div>
+
+<script>
+document.getElementById("stageAIbtn").onclick = () => {
+    document.getElementById("stageAIchat").style.display = "block";
+}
+
+async function askStageAI() {
+    const question = document.getElementById("stageQuestion").value;
+    const res = await fetch("/api/ai-stage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question })
+    });
+    const data = await res.json();
+    document.getElementById("stageResponse").innerHTML = data.answer;
+}
+</script>
+</body>
+</html>

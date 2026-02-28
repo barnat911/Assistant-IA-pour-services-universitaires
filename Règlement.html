@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Règlement Intérieur - UniAssist IA</title>
+    <link rel="stylesheet" href="reglement.css">
+</head>
+<body>
+
+<header>
+    <h1>🎓 UniAssist IA</h1>
+    <p>Règlement Intérieur Universitaire</p>
+</header>
+
+<section class="reglement-container">
+    <h2>📜 Consulter le règlement</h2>
+
+    <div class="search-box">
+        <label for="searchInput">Rechercher un article :</label>
+        <input type="text" id="searchInput" placeholder="Ex: Absence, Stage, Notes">
+    </div>
+
+    <div class="reglement-list" id="reglementList">
+        <div class="article" data-title="Absences">
+            <h3>Article 1 : Absences</h3>
+            <p>Les absences doivent être justifiées par certificat médical ou document officiel. Toute absence non justifiée pourra entraîner des sanctions conformément au règlement.</p>
+        </div>
+        <div class="article" data-title="Inscriptions">
+            <h3>Article 2 : Inscriptions</h3>
+            <p>L’inscription est obligatoire chaque semestre. Les délais sont communiqués par l’administration et doivent être respectés.</p>
+        </div>
+        <div class="article" data-title="Stages">
+            <h3>Article 3 : Stages</h3>
+            <p>Les stages sont obligatoires pour certaines filières. Ils doivent être déclarés à l’administration et validés par le responsable pédagogique.</p>
+        </div>
+        <div class="article" data-title="Paiements">
+            <h3>Article 4 : Paiements</h3>
+            <p>Les frais universitaires doivent être réglés dans les délais. Tout retard entraîne des pénalités et peut bloquer l’accès aux examens.</p>
+        </div>
+    </div>
+
+    <button onclick="downloadPDF()">📥 Télécharger le règlement complet (PDF)</button>
+</section>
+
+<footer>
+    <p>© 2026 UniAssist IA - Projet PFE</p>
+</footer>
+
+<script>
+    // Filtrage des articles par recherche
+    const searchInput = document.getElementById('searchInput');
+    const articles = document.querySelectorAll('#reglementList .article');
+
+    searchInput.addEventListener('input', () => {
+        const query = searchInput.value.toLowerCase();
+        articles.forEach(article => {
+            const title = article.dataset.title.toLowerCase();
+            if(title.includes(query)) {
+                article.style.display = '';
+            } else {
+                article.style.display = 'none';
+            }
+        });
+    });
+
+    // Fonction téléchargement PDF (simulé)
+    function downloadPDF() {
+        alert("Téléchargement du PDF du règlement...");
+        // Ici on peut lier un fichier réel PDF
+        // window.location.href = "reglement.pdf";
+    }
+</script>
+
+</body>
+</html>

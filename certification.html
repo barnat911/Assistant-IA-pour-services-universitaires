@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Certificats - UniAssist IA</title>
+    <link rel="stylesheet" href="certificats.css">
+</head>
+<body>
+
+<header>
+    <h1>🎓 UniAssist IA</h1>
+    <p>Demande de Certificats Administratifs</p>
+</header>
+
+<section class="certificat-container">
+    <h2>📄 Nouvelle Demande</h2>
+
+    <form>
+        <div class="form-group">
+            <label>Type de certificat</label>
+            <select required>
+                <option value="">-- Sélectionner --</option>
+                <option>Attestation de scolarité</option>
+                <option>Relevé de notes</option>
+                <option>Certificat de réussite</option>
+                <option>Attestation de stage</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Année académique</label>
+            <select required>
+                <option>2025-2026</option>
+                <option>2024-2025</option>
+                <option>2023-2024</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Motif (optionnel)</label>
+            <textarea placeholder="Ex: Pour dossier de visa"></textarea>
+        </div>
+
+        <button type="submit">📤 Envoyer la demande</button>
+        <button type="button" class="secondary-btn">📥 Télécharger PDF</button>
+    </form>
+</section>
+
+<section class="historique">
+    <h2>📑 Historique des demandes</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Date</th>
+                <th>Statut</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Attestation de scolarité</td>
+                <td>15/02/2026</td>
+                <td class="valide">Validé</td>
+            </tr>
+            <tr>
+                <td>Relevé de notes</td>
+                <td>02/01/2026</td>
+                <td class="attente">En attente</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<footer>
+    <p>© 2026 UniAssist IA - Projet PFE</p>
+</footer>
+<!-- Bouton flottant IA sur page Certificats -->
+<button id="certAIbtn">💡 Assistant Certificats</button>
+
+<div id="certAIchat" style="display:none; border:1px solid #004080; padding:10px; width:350px; position:fixed; bottom:20px; right:20px; background:white;">
+  <textarea id="certQuestion" placeholder="Posez votre question sur les certificats..." rows="3" style="width:100%;"></textarea>
+  <button onclick="askCertAI()">Envoyer</button>
+  <div id="certResponse" style="margin-top:10px;"></div>
+</div>
+
+<script>
+document.getElementById("certAIbtn").onclick = () => {
+    document.getElementById("certAIchat").style.display = "block";
+}
+
+async function askCertAI() {
+    const question = document.getElementById("certQuestion").value;
+    const res = await fetch("/api/ai-certificats", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question })
+    });
+    const data = await res.json();
+    document.getElementById("certResponse").innerHTML = data.answer;
+}
+</script>
+</body>
+</html>

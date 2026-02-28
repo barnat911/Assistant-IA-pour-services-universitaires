@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Paiement - UniAssist IA</title>
+    <link rel="stylesheet" href="paiement.css">
+</head>
+<body>
+
+<header>
+    <h1>🎓 UniAssist IA</h1>
+    <p>Gestion des Paiements Universitaires</p>
+</header>
+
+<section class="paiement-container">
+    <h2>💳 Paiement des frais</h2>
+
+    <form>
+
+        <div class="form-group">
+            <label>Type de frais</label>
+            <select required>
+                <option value="">-- Sélectionner --</option>
+                <option>Inscription semestre</option>
+                <option>Frais de bibliothèque</option>
+                <option>Frais laboratoire</option>
+                <option>Autres frais</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Montant (€)</label>
+            <input type="number" placeholder="Ex: 250" required>
+        </div>
+
+        <div class="form-group">
+            <label>Méthode de paiement</label>
+            <select required>
+                <option value="">-- Sélectionner --</option>
+                <option>Carte bancaire</option>
+                <option>Virement bancaire</option>
+                <option>PayPal</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Numéro de référence (optionnel)</label>
+            <input type="text" placeholder="Ex: Référence du virement">
+        </div>
+
+        <button type="submit">📤 Payer maintenant</button>
+        <button type="button" class="secondary-btn">📥 Télécharger reçu</button>
+
+    </form>
+</section>
+
+<section class="historique">
+    <h2>📊 Historique des paiements</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Montant</th>
+                <th>Date</th>
+                <th>Statut</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Inscription semestre</td>
+                <td>250 €</td>
+                <td>01/02/2026</td>
+                <td class="valide">Payé</td>
+            </tr>
+            <tr>
+                <td>Frais bibliothèque</td>
+                <td>50 €</td>
+                <td>15/02/2026</td>
+                <td class="attente">En attente</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<footer>
+    <p>© 2026 UniAssist IA - Projet PFE</p>
+</footer>
+<!-- Bouton flottant IA sur page Paiement -->
+<button id="paiementAIbtn">💡 Assistant Paiement</button>
+
+<div id="paiementAIchat" style="display:none; border:1px solid #004080; padding:10px; width:350px; position:fixed; bottom:20px; right:20px; background:white;">
+  <textarea id="paiementQuestion" placeholder="Posez votre question sur les paiements..." rows="3" style="width:100%;"></textarea>
+  <button onclick="askPaiementAI()">Envoyer</button>
+  <div id="paiementResponse" style="margin-top:10px;"></div>
+</div>
+
+<script>
+document.getElementById("paiementAIbtn").onclick = () => {
+    document.getElementById("paiementAIchat").style.display = "block";
+}
+
+async function askPaiementAI() {
+    const question = document.getElementById("paiementQuestion").value;
+    const res = await fetch("/api/ai-paiement", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question })
+    });
+    const data = await res.json();
+    document.getElementById("paiementResponse").innerHTML = data.answer;
+}
+</script>
+</body>
+</html>
